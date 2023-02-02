@@ -37,15 +37,15 @@ function App() {
 
   const completeTodos = (text) => {
     const todoIndex = todos.findIndex(todo => todo.text == text);
-    todos[todoIndex] = {
-      text: todos[todoIndex].text,
-      completed: true,
-    };
+    const newTodos = [...todos];
+    newTodos[todoIndex].completed = true;
+    setTodos(newTodos);
   };
+
 
   return (
     <React.Fragment>
-      <TodoCounter 
+      <TodoCounter
         total={totalTodos}
         completed={completedTodos}
       />
@@ -55,9 +55,11 @@ function App() {
       />
       <TodoList>
         {searchedTodos.map(todo => (
-          <TodoItem key={todo.text}
+          <TodoItem
+            key={todo.text}
             text={todo.text}
             completed={todo.completed}
+            onComplete={() => completeTodos(todo.text)}
           />
         ))}
       </TodoList>
@@ -66,6 +68,7 @@ function App() {
 
     </React.Fragment>
   );
-}
+};
+
 
 export default App;
